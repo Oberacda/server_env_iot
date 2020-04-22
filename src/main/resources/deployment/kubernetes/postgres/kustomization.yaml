@@ -1,0 +1,12 @@
+commonLabels:
+  component: postgres
+resources:
+  - headless-service.yaml
+  - statefulset.yaml
+  - storage-class.yaml
+secretGenerator:
+  - name: postgres-secret
+    files:
+      - database.secret
+      - username.secret
+      - password.secret

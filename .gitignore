@@ -324,6 +324,6 @@ fabric.properties
 .nfs*
 
 ### Project Specific ###
-*.secret.*
+*.secret*
 !*.encrypted
 *local.*

@@ -1,0 +1,35 @@
+spring:
+  cloud:
+    gcp:
+      credentials:
+        location: classpath:deployment/gcp_pubsub_auth.secret.json
+        scopes: 'https://www.googleapis.com/auth/pubsub'
+      project-id: 'd4ve-me'
+      pubsub:
+        enabled: true
+
+
+  main:
+    banner-mode: console
+  profiles: production
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  datasource:
+    initialization-mode: always
+    platform: 'postgres'
+    url: 'jdbc:postgresql://postgres-0.postgres.default.svc.cluster.local:5432/${POSTGRES_DB}'
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+
+logging:
+  level:
+    org:
+      springframework: 'INFO'

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  selector: {}
+  replicas: 1
+  template:
+    metadata:
+      name: server
+    spec:
+      containers:
+        - name: server
+          image: $DOCKER_IMAGE
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: database.secret
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: username.secret
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password.secret
+          ports:
+            - containerPort: 8080
+              name: web
+            - containerPort: 8081
+              name: health
+          livenessProbe:
+            httpGet:
+              port: health
+              path: /health
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: health
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          resources:
+            requests:
+              cpu: 50m
+
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0

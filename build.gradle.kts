@@ -40,7 +40,8 @@ val dockerImage = "d4ve/home-env-iot-server:${project.version}"
 val dockerUser: String? by project
 val dockerPassword: String? by project
 val deploymentSrc = "${project.projectDir}/src/${sourceSets.main.name}/resources/deployment"
-val deploymentKubeConfig = "$deploymentSrc/deployment/kubeconfig.secret.yaml"
+val deploymentSrcKubernetes = "$deploymentSrc/kubernetes"
+val deploymentKubeConfig = "$deploymentSrcKubernetes/deployment-account/kubeconfig.secret.yaml"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -52,7 +53,10 @@ tasks.withType<Test> {
 
 gradleFileEncrypt {
     files = arrayOf(
-            "$deploymentSrc/gcp_pubsub_auth.secret.json"
+            "$deploymentSrc/gcp_pubsub_auth.secret.json",
+            "$deploymentSrc/kubernetes/postgres/database.secret",
+            "$deploymentSrc/kubernetes/postgres/username.secret",
+            "$deploymentSrc/kubernetes/postgres/password.secret"
     )
 }
 
@@ -97,6 +101,76 @@ task("push") {
     dependsOn("jib")
 }
 
+val writeDeploymentParameters by tasks.creating {
+    group = "deployment"
+    val templateFiles = fileTree(deploymentSrc) {
+        include("**/*.tpl.*")
+    }.files
+    val parameters = mapOf(
+            "DOCKER_IMAGE" to dockerImage
+    )
+
+    fun File.outputFile() = file(path.replace(".tpl", ".filled"))
+
+    inputs.files(templateFiles)
+    inputs.properties(parameters)
+    outputs.files(templateFiles.map { it.outputFile() })
+
+    doLast {
+        templateFiles.forEach { templateFile ->
+            var filledText = templateFile.readText()
+            for ((key, value) in parameters) {
+                filledText = filledText.replace("$$key", value)
+            }
+            templateFile.outputFile().writeText(filledText)
+        }
+    }
+}
+
+fun kubectlDeployTask(
+        kustomization: String,
+        commonTag: Pair<String, String>,
+        kubeconfig: String? = null,
+        block: Exec.() -> Unit = {}
+) = tasks.creating(Exec::class) {
+    group = "deployment"
+    dependsOn(writeDeploymentParameters)
+
+    inputs.files(fileTree(kustomization) {
+        exclude("*.encrypted")
+        exclude("*.tpl.*")
+    })
+
+    commandLine(
+            "kubectl", "apply",
+            "--kustomize", ".",
+            "--prune",
+            "--selector", "${commonTag.first}=${commonTag.second}",
+            "--wait"
+    )
+    workingDir(kustomization)
+    if (kubeconfig != null) {
+        environment("KUBECONFIG", kubeconfig)
+    }
+    block()
+}
+
+val deployDeploymentAccount by kubectlDeployTask(
+        kustomization = "$deploymentSrcKubernetes/deployment-account",
+        commonTag = "component" to "deployment-account"
+)
+val deployDatabase by kubectlDeployTask(
+        kustomization = "$deploymentSrcKubernetes/postgres",
+        commonTag = "component" to "postgres",
+        kubeconfig = deploymentKubeConfig
+)
+val deployServer by kubectlDeployTask(
+        kustomization = "$deploymentSrcKubernetes/server",
+        commonTag = "component" to "server",
+        kubeconfig = deploymentKubeConfig
+) {
+    mustRunAfter(deployDatabase)
+}
 
 val Project.versionDetails
     get() = (this.extra["versionDetails"] as groovy.lang.Closure<*>)() as com.palantir.gradle.gitversion.VersionDetails
