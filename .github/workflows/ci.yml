@@ -29,10 +29,6 @@ jobs:
         run: ./gradlew clean dependencies
       - name: Lint
         run: ./gradlew lint
-      - name: Compile
-        run: ./gradlew classes testClasses
-      - name: Test
-        run: ./gradlew test
 
   deploy:
     name: Deploy
