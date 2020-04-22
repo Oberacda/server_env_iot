@@ -322,3 +322,8 @@ fabric.properties
 .directory
 .Trash-*
 .nfs*
+
+### Project Specific ###
+*.secret.*
+!*.encrypted
+*local.*
