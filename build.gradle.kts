@@ -172,5 +172,10 @@ val deployServer by kubectlDeployTask(
     mustRunAfter(deployDatabase)
 }
 
+task("deploy") {
+    group = "deployment"
+    dependsOn(deployDatabase, deployServer)
+}
+
 val Project.versionDetails
     get() = (this.extra["versionDetails"] as groovy.lang.Closure<*>)() as com.palantir.gradle.gitversion.VersionDetails
