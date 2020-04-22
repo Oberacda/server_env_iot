@@ -1,11 +1,10 @@
 package me.d4ve.iot.homeenv.service;
 
+import java.util.List;
 import me.d4ve.iot.homeenv.model.EnvironmentalData;
 
-import java.util.List;
-
 public interface IEnvironmentalDataService {
-    List<EnvironmentalData> findAll();
+  List<EnvironmentalData> findAll();
 
-    void insert(EnvironmentalData data);
+  void insert(EnvironmentalData data);
 }

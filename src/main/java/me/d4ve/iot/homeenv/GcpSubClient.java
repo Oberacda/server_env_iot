@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;
 import org.springframework.cloud.gcp.pubsub.integration.inbound.PubSubInboundChannelAdapter;
 import org.springframework.context.annotation.Bean;
@@ -19,43 +18,38 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GcpSubClient {
-    private static final Log LOGGER = LogFactory.getLog(GcpSubClient.class);
+  private static final Log LOGGER = LogFactory.getLog(GcpSubClient.class);
 
-    @Autowired
-    private IEnvironmentalDataService environmentalDataService;
+  @Autowired private IEnvironmentalDataService environmentalDataService;
 
-    @Bean
-    public PubSubInboundChannelAdapter messageChannelAdapter(
+  @Bean
+  public PubSubInboundChannelAdapter messageChannelAdapter(
+      @Qualifier("envDataInputChannel") MessageChannel inputChannel,
+      PubSubTemplate pubSubTemplate) {
 
-            @Qualifier("envDataInputChannel") MessageChannel inputChannel,
+    PubSubInboundChannelAdapter adapter =
+        new PubSubInboundChannelAdapter(
+            pubSubTemplate, "projects/d4ve-me/subscriptions/david-env-sub");
 
-            PubSubTemplate pubSubTemplate) {
+    adapter.setOutputChannel(inputChannel);
 
-        PubSubInboundChannelAdapter adapter =
+    return adapter;
+  }
 
-                new PubSubInboundChannelAdapter(pubSubTemplate, "projects/d4ve-me/subscriptions/david-env-sub");
+  @Bean
+  public MessageChannel envDataInputChannel() {
 
-        adapter.setOutputChannel(inputChannel);
+    return new DirectChannel();
+  }
 
-        return adapter;
+  @ServiceActivator(inputChannel = "envDataInputChannel")
+  public void messageReceiver(String payload) throws JsonProcessingException {
+    ObjectMapper objectMapper = new ObjectMapper();
 
-    }
+    var value = objectMapper.readValue(payload, EnvironmentalData.class);
 
-    @Bean
-    public MessageChannel envDataInputChannel() {
+    environmentalDataService.insert(value);
 
-        return new DirectChannel();
-
-    }
-
-    @ServiceActivator(inputChannel = "envDataInputChannel")
-    public void messageReceiver(String payload) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        var value = objectMapper.readValue(payload, EnvironmentalData.class);
-
-        environmentalDataService.insert(value);
-
-        LOGGER.info("Message arrived! Payload: " + value);
-    }
+    LOGGER.info("Message arrived! Payload: " + value);
+  }
 }

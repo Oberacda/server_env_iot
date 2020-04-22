@@ -1,7 +1,6 @@
 package me.d4ve.iot.homeenv;
 
 import java.util.List;
-
 import me.d4ve.iot.homeenv.model.EnvironmentalData;
 import me.d4ve.iot.homeenv.service.IEnvironmentalDataService;
 import org.springframework.beans.factory.annotation.Autowired;
