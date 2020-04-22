@@ -1,28 +1,25 @@
 package me.d4ve.iot.homeenv;
 
+import java.util.List;
 import me.d4ve.iot.homeenv.model.City;
 import me.d4ve.iot.homeenv.service.ICityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Controller
 public class MyController {
 
-    @Autowired
-    private ICityService cityService;
+  @Autowired private ICityService cityService;
 
-    @GetMapping("/showCities")
-    public String findCities(Model model) {
+  @GetMapping("/showCities")
+  public String findCities(Model model) {
 
-        var cities = (List<City>) cityService.findAll();
+    var cities = (List<City>) cityService.findAll();
 
-        model.addAttribute("cities", cities);
+    model.addAttribute("cities", cities);
 
-        return "showCities";
-    }
+    return "showCities";
+  }
 }
