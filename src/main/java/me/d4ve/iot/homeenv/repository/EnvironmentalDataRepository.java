@@ -1,8 +1,8 @@
 package me.d4ve.iot.homeenv.repository;
 
-import me.d4ve.iot.homeenv.model.City;
+import me.d4ve.iot.homeenv.model.EnvironmentalData;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CityRepository extends CrudRepository<City, Long> {}
+public interface EnvironmentalDataRepository extends CrudRepository<EnvironmentalData, Long> {}
