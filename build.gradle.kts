@@ -39,7 +39,7 @@ dependencies {
 val dockerImage = "d4ve/home-env-iot-server:${project.version}"
 val dockerUser: String? by project
 val dockerPassword: String? by project
-val deploymentSrc = "${project.projectDir}/src/${sourceSets.main.name}/resources/deployment"
+val deploymentSrc = "${project.projectDir}/src/deployment"
 val deploymentSrcKubernetes = "$deploymentSrc/kubernetes"
 val deploymentKubeConfig = "$deploymentSrcKubernetes/deployment-account/kubeconfig.secret.yaml"
 
@@ -53,10 +53,9 @@ tasks.withType<Test> {
 
 gradleFileEncrypt {
     files = arrayOf(
-            "$deploymentSrc/gcp_pubsub_auth.secret.json",
-            "$deploymentSrc/kubernetes/postgres/database.secret",
-            "$deploymentSrc/kubernetes/postgres/username.secret",
-            "$deploymentSrc/kubernetes/postgres/password.secret"
+            "${project.projectDir}/src/${sourceSets.main.name}/resources/gcp_pubsub_auth.secret.json",
+            "$deploymentSrcKubernetes/postgres/postgres.secret.yaml",
+            "$deploymentSrcKubernetes/deployment-account/kubeconfig.secret.yaml"
     )
 }
 

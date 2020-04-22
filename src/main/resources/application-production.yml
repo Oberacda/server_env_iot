@@ -2,7 +2,7 @@ spring:
   cloud:
     gcp:
       credentials:
-        location: classpath:deployment/gcp_pubsub_auth.secret.json
+        location: classpath:gcp_pubsub_auth.secret.json
         scopes: 'https://www.googleapis.com/auth/pubsub'
       project-id: 'd4ve-me'
       pubsub:
@@ -10,7 +10,8 @@ spring:
 
 
   main:
-    banner-mode: console
+    banner-mode: off
+
   profiles: production
 
   jpa:
@@ -33,3 +34,10 @@ logging:
   level:
     org:
       springframework: 'INFO'
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /

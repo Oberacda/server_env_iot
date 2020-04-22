@@ -3,7 +3,7 @@ spring:
     gcp:
 
       credentials:
-        location: classpath:deployment/gcp_pubsub_auth.secret.json
+        location: classpath:gcp_pubsub_auth.secret.json
         scopes: 'https://www.googleapis.com/auth/pubsub'
       project-id: 'd4ve-me'
       pubsub:
