@@ -13,9 +13,7 @@ public class EnvironementalDataService implements IEnvironmentalDataService {
 
   @Override
   public List<EnvironmentalData> findAll() {
-    var data = (List<EnvironmentalData>) repository.findAll();
-    ;
-    return data;
+    return (List<EnvironmentalData>) repository.findAll();
   }
 
   @Override

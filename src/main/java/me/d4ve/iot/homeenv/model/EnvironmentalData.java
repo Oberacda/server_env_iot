@@ -23,7 +23,9 @@ public class EnvironmentalData {
   private Double illuminance;
   private Double uva;
   private Double uvb;
-  private Double uv_index;
+
+  @Column(name = "uv_index")
+  private Double uvIndex;
 
   public EnvironmentalData() {}
 
@@ -35,7 +37,7 @@ public class EnvironmentalData {
       Double illuminance,
       Double uva,
       Double uvb,
-      Double uv_index) {
+      Double uvIndex) {
     this.timestamp = timestamp;
     this.temperature = temperature;
     this.humidity = humidity;
@@ -43,7 +45,7 @@ public class EnvironmentalData {
     this.illuminance = illuminance;
     this.uva = uva;
     this.uvb = uvb;
-    this.uv_index = uv_index;
+    this.uvIndex = uvIndex;
   }
 
   public void setTimestamp(Timestamp timestamp) {
@@ -74,8 +76,9 @@ public class EnvironmentalData {
     this.uvb = uvb;
   }
 
-  public void setUv_index(Double uv_index) {
-    this.uv_index = uv_index;
+  @Column(name = "uv_index")
+  public void setUvIndex(Double uvIndex) {
+    this.uvIndex = uvIndex;
   }
 
   public Timestamp getTimestamp() {
@@ -107,7 +110,7 @@ public class EnvironmentalData {
   }
 
   public Double getUv_index() {
-    return uv_index;
+    return uvIndex;
   }
 
   @Override
