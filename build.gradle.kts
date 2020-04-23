@@ -184,7 +184,6 @@ sonarqube {
         property("sonar.projectKey", "Oberacda_server_env_iot");
         property("sonar.organization", "oberacda-github");
         property("sonar.host.url", "https://sonarcloud.io");
-        property("sonar.login", "4513cec8a6a49ae1650dfa450b59530e8d7d72c9")
     }
 }
 
