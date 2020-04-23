@@ -57,6 +57,7 @@ tasks.withType<Test> {
 gradleFileEncrypt {
     files = arrayOf(
             "${project.projectDir}/src/${sourceSets.main.name}/resources/gcp_pubsub_auth.secret.json",
+            "$deploymentSrcKubernetes/postgres/postgres.secret.yaml",
             "$deploymentSrcKubernetes/deployment-account/kubeconfig.secret.yaml"
     )
 }
