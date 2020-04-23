@@ -7,6 +7,7 @@ plugins {
     id("com.palantir.docker-run") version "0.25.0"
     id("com.palantir.git-version") version "0.12.2"
     id("com.cherryperry.gradle-file-encrypt") version "1.4.0"
+    id("org.sonarqube") version "2.8"
 }
 
 group = "me.d4ve.iot"
@@ -30,6 +31,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
     runtimeOnly("org.postgresql:postgresql")
+
+    testRuntimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -174,6 +177,15 @@ val deployServer by kubectlDeployTask(
 task("deploy") {
     group = "deployment"
     dependsOn(deployDatabase, deployServer)
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "Oberacda_server_env_iot");
+        property("sonar.organization", "oberacda-github");
+        property("sonar.host.url", "https://sonarcloud.io");
+        property("sonar.login", "4513cec8a6a49ae1650dfa450b59530e8d7d72c9")
+    }
 }
 
 val Project.versionDetails

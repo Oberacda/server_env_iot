@@ -31,6 +31,10 @@ jobs:
         run: ./gradlew lint
       - name: Compile
         run: ./gradlew classes testClasses
+      - name: Test
+        run: ./gradlew test
+      - name: Sonarqube
+        run: ./gradlew sonarqube
 
   deploy:
     name: Deploy
