@@ -23,7 +23,6 @@ public class EnvironmentalData {
   private Double illuminance;
   private Double uva;
   private Double uvb;
-
   @Column(name = "uv_index")
   private Double uvIndex;
 
