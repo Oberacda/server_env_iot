@@ -27,6 +27,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Decrypt
+        run: ./gradlew decryptFiles
+        env:
+          GFE_PASSWORD: ${{ secrets.ENCRYPTION_KEY }}
       - name: Prepare
         run: ./gradlew clean dependencies
       - name: Lint
@@ -61,6 +65,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Decrypt
+        run: ./gradlew decryptFiles
+        env:
+          GFE_PASSWORD: ${{ secrets.ENCRYPTION_KEY }}
       - name: Version
         run: ./gradlew printVersion
       - name: Push
@@ -68,9 +76,5 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_dockerUser: ${{ secrets.DOCKER_USER }}
           ORG_GRADLE_PROJECT_dockerPassword: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Decrypt
-        run: ./gradlew decryptFiles
-        env:
-          GFE_PASSWORD: ${{ secrets.ENCRYPTION_KEY }}
       - name: Deploy
         run: ./gradlew deploy
