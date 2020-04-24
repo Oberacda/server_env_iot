@@ -1,6 +1,6 @@
-package me.d4ve.iot.homeenv.repository;
+package me.d4ve.iot.homeenv.db.repository;
 
-import me.d4ve.iot.homeenv.model.EnvironmentalData;
+import me.d4ve.iot.homeenv.db.model.EnvironmentalData;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package me.d4ve.iot.homeenv.model;
+package me.d4ve.iot.homeenv.db.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.sql.Timestamp;

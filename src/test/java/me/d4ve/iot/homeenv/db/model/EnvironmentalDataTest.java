@@ -1,4 +1,4 @@
-package me.d4ve.iot.homeenv.model;
+package me.d4ve.iot.homeenv.db.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

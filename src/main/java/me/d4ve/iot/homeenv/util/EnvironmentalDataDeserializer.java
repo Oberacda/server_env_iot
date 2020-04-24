@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import me.d4ve.iot.homeenv.model.EnvironmentalData;
+import me.d4ve.iot.homeenv.db.model.EnvironmentalData;
 
 /**
  * Custom jackson deserializer for the {@link EnvironmentalData} class.

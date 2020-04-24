@@ -1,11 +1,10 @@
-package me.d4ve.iot.homeenv.service;
+package me.d4ve.iot.homeenv.db.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import me.d4ve.iot.homeenv.model.EnvironmentalData;
+import me.d4ve.iot.homeenv.db.model.EnvironmentalData;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsIterableContaining;

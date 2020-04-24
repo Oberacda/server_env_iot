@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.Instant;
-import me.d4ve.iot.homeenv.model.EnvironmentalData;
+import me.d4ve.iot.homeenv.db.model.EnvironmentalData;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.AfterEach;

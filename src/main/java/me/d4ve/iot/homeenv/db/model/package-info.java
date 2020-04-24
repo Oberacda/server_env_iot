@@ -3,4 +3,4 @@
  *
  * @author David Oberacker
  */
-package me.d4ve.iot.homeenv.model;
+package me.d4ve.iot.homeenv.db.model;
