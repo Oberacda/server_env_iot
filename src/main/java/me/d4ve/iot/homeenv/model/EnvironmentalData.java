@@ -2,9 +2,10 @@ package me.d4ve.iot.homeenv.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 import javax.persistence.*;
-import me.d4ve.iot.homeenv.EnvironementalDataDeserializer;
+import me.d4ve.iot.homeenv.util.EnvironmentalDataDeserializer;
 
 /**
  * Database entry representing a single record of environmental data.
@@ -16,7 +17,7 @@ import me.d4ve.iot.homeenv.EnvironementalDataDeserializer;
  */
 @Entity
 @Table(name = "env")
-@JsonDeserialize(using = EnvironementalDataDeserializer.class)
+@JsonDeserialize(using = EnvironmentalDataDeserializer.class)
 public class EnvironmentalData {
 
   /**
@@ -68,9 +69,11 @@ public class EnvironmentalData {
    * Creates a new environmental data element.
    *
    * <p>This element is not directly inserted into the database. The default values for all data
-   * attributes is 0. The default timestamp is null.
+   * attributes is 0. The default timestamp is the unix epoch.
    */
-  public EnvironmentalData() {}
+  public EnvironmentalData() {
+    this.timestamp = Timestamp.from(Instant.ofEpochSecond(0));
+  }
 
   /**
    * Setter for the timestamp the data was recorded at.

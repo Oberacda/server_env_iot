@@ -191,5 +191,14 @@ sonarqube {
     }
 }
 
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = true
+    }
+}
+
+
+
 val Project.versionDetails
     get() = (this.extra["versionDetails"] as groovy.lang.Closure<*>)() as com.palantir.gradle.gitversion.VersionDetails

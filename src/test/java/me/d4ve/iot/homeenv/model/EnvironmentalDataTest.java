@@ -26,7 +26,7 @@ class EnvironmentalDataTest {
 
   @Test
   void timestamp() {
-    Timestamp epochNull = Timestamp.from(Instant.ofEpochSecond(0));
+    Timestamp epochNull = Timestamp.from(Instant.ofEpochSecond(1));
     testData.setTimestamp(epochNull);
     assertEquals(epochNull, testData.getTimestamp());
 
@@ -118,9 +118,9 @@ class EnvironmentalDataTest {
     assertThat(testData, Is.is(testData));
 
     assertThat(testData, Is.is(testDataOther));
-    Timestamp epochNull = Timestamp.from(Instant.ofEpochSecond(0));
+    Timestamp epochNotNull = Timestamp.from(Instant.ofEpochSecond(1));
 
-    testData.setTimestamp(epochNull);
+    testData.setTimestamp(epochNotNull);
     assertThat(testData, IsNot.not(testDataOther));
 
     assertThat(testData, IsNot.not(IsEqual.equalTo(null)));
