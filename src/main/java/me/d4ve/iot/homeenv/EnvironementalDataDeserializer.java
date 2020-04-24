@@ -23,18 +23,19 @@ public class EnvironementalDataDeserializer extends StdDeserializer<Environmenta
   public EnvironmentalData deserialize(JsonParser jp, DeserializationContext ctxt)
       throws IOException {
     JsonNode node = jp.getCodec().readTree(jp);
+    EnvironmentalData data = new EnvironmentalData();
+
     long epochTime = node.get("timestamp").longValue();
-    Timestamp timestamp = Timestamp.from(Instant.ofEpochSecond(epochTime));
+    data.setTimestamp(Timestamp.from(Instant.ofEpochSecond(epochTime)));
 
-    Double temperature = node.get("temperature").doubleValue();
-    Double humidity = node.get("humidity").doubleValue();
-    Double pressure = node.get("pressure").doubleValue();
-    Double illuminance = node.get("illuminance").doubleValue();
-    Double uva = node.get("uva").doubleValue();
-    Double uvb = node.get("uvb").doubleValue();
-    Double uvIndex = node.get("uv_index").doubleValue();
+    data.setTemperature(node.get("temperature").doubleValue());
+    data.setHumidity(node.get("humidity").doubleValue());
+    data.setPressure(node.get("pressure").doubleValue());
+    data.setIlluminance(node.get("illuminance").doubleValue());
+    data.setUva(node.get("uva").doubleValue());
+    data.setUvb(node.get("uvb").doubleValue());
+    data.setUvIndex(node.get("uv_index").doubleValue());
 
-    return new EnvironmentalData(
-        timestamp, temperature, humidity, pressure, illuminance, uva, uvb, uvIndex);
+    return data;
   }
 }

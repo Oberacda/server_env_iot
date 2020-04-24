@@ -29,25 +29,6 @@ public class EnvironmentalData {
 
   public EnvironmentalData() {}
 
-  public EnvironmentalData(
-      Timestamp timestamp,
-      Double temperature,
-      Double humidity,
-      Double pressure,
-      Double illuminance,
-      Double uva,
-      Double uvb,
-      Double uvIndex) {
-    this.timestamp = timestamp;
-    this.temperature = temperature;
-    this.humidity = humidity;
-    this.pressure = pressure;
-    this.illuminance = illuminance;
-    this.uva = uva;
-    this.uvb = uvb;
-    this.uvIndex = uvIndex;
-  }
-
   public void setTimestamp(Timestamp timestamp) {
     this.timestamp = timestamp;
   }
@@ -109,7 +90,7 @@ public class EnvironmentalData {
     return uvb;
   }
 
-  public Double getUv_index() {
+  public Double getUvIndex() {
     return uvIndex;
   }
 
@@ -126,7 +107,7 @@ public class EnvironmentalData {
         && getIlluminance().equals(that.getIlluminance())
         && getUva().equals(that.getUva())
         && getUvb().equals(that.getUvb())
-        && getUv_index().equals(that.getUv_index());
+        && getUvIndex().equals(that.getUvIndex());
   }
 
   @Override
@@ -140,6 +121,6 @@ public class EnvironmentalData {
         getIlluminance(),
         getUva(),
         getUvb(),
-        getUv_index());
+        getUvIndex());
   }
 }
