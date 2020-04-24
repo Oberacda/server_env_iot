@@ -8,6 +8,7 @@ plugins {
     id("com.palantir.git-version") version "0.12.2"
     id("com.cherryperry.gradle-file-encrypt") version "1.4.0"
     id("org.sonarqube") version "2.8"
+    jacoco
 }
 
 group = "me.d4ve.iot"
@@ -76,7 +77,6 @@ jib {
         jvmFlags = listOf("-Dspring.profiles.active=production")
     }
 }
-
 
 dockerRun {
     name = project.name
@@ -160,12 +160,16 @@ fun kubectlDeployTask(
 val deployDeploymentAccount by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/deployment-account",
         commonTag = "component" to "deployment-account"
-)
+) {
+    mustRunAfter("decyptFiles")
+}
 val deployDatabase by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/postgres",
         commonTag = "component" to "postgres",
         kubeconfig = deploymentKubeConfig
-)
+) {
+    mustRunAfter("decyptFiles")
+}
 val deployServer by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/server",
         commonTag = "component" to "server",
