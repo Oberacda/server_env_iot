@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashSet;
-
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsEqual;
@@ -31,7 +30,7 @@ class EnvironmentalDataTest {
     testData.setTimestamp(epochNull);
     assertEquals(epochNull, testData.getTimestamp());
 
-    //Test for equality regarding timestamps.
+    // Test for equality regarding timestamps.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setTimestamp(epochNull);
     assertThat(testData, Is.is(testDataOther));
@@ -42,7 +41,7 @@ class EnvironmentalDataTest {
     testData.setTemperature(100.0);
     assertEquals(100.0, testData.getTemperature());
 
-    //Test for equality regarding temperature.
+    // Test for equality regarding temperature.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setTemperature(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -53,7 +52,7 @@ class EnvironmentalDataTest {
     testData.setHumidity(100.0);
     assertEquals(100.0, testData.getHumidity());
 
-    //Test for equality regarding humidity.
+    // Test for equality regarding humidity.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setHumidity(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -64,7 +63,7 @@ class EnvironmentalDataTest {
     testData.setPressure(100.0);
     assertEquals(100.0, testData.getPressure());
 
-    //Test for equality regarding pressure.
+    // Test for equality regarding pressure.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setPressure(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -75,7 +74,7 @@ class EnvironmentalDataTest {
     testData.setIlluminance(100.0);
     assertEquals(100.0, testData.getIlluminance());
 
-    //Test for equality regarding illuminance.
+    // Test for equality regarding illuminance.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setIlluminance(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -86,7 +85,7 @@ class EnvironmentalDataTest {
     testData.setUva(100.0);
     assertEquals(100.0, testData.getUva());
 
-    //Test for equality regarding uva.
+    // Test for equality regarding uva.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setUva(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -97,7 +96,7 @@ class EnvironmentalDataTest {
     testData.setUvb(100.0);
     assertEquals(100.0, testData.getUvb());
 
-    //Test for equality regarding uvb.
+    // Test for equality regarding uvb.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setUvb(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -108,7 +107,7 @@ class EnvironmentalDataTest {
     testData.setUvIndex(100.0);
     assertEquals(100.0, testData.getUvIndex());
 
-    //Test for equality regarding zv index.
+    // Test for equality regarding zv index.
     assertThat(testData, IsNot.not(testDataOther));
     testDataOther.setUvIndex(100.0);
     assertThat(testData, Is.is(testDataOther));
@@ -128,7 +127,6 @@ class EnvironmentalDataTest {
     Double test = 10d;
 
     assertThat(testData, IsNot.not(IsEqual.equalTo(test)));
-
   }
 
   @Test
@@ -141,7 +139,7 @@ class EnvironmentalDataTest {
 
     assertThat(testSet, IsCollectionWithSize.hasSize(1));
 
-    testSet= new HashSet<>();
+    testSet = new HashSet<>();
 
     Timestamp epochNull = Timestamp.from(Instant.ofEpochSecond(1000));
     testData.setTimestamp(epochNull);
@@ -150,5 +148,4 @@ class EnvironmentalDataTest {
     testSet.add(testDataOther);
     assertThat(testSet, IsCollectionWithSize.hasSize(2));
   }
-
 }
