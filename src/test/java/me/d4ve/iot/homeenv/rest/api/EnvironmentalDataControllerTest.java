@@ -32,7 +32,7 @@ class EnvironmentalDataControllerTest {
     String response =
         mockMvc.perform(get("/env/temperature")).andReturn().getResponse().getContentAsString();
     List<TemperatureTransferObject> responseObjects =
-        objectMapper.readValue(response, new TypeReference<List<TemperatureTransferObject>>() {});
+        objectMapper.readValue(response, new TypeReference<>() {});
 
     assertThat(responseObjects, IsCollectionWithSize.hasSize(22));
   }
@@ -42,7 +42,7 @@ class EnvironmentalDataControllerTest {
     String response =
         mockMvc.perform(get("/env/humidity")).andReturn().getResponse().getContentAsString();
     List<HumidityTransferObject> responseObjects =
-        objectMapper.readValue(response, new TypeReference<List<HumidityTransferObject>>() {});
+        objectMapper.readValue(response, new TypeReference<>() {});
 
     assertThat(responseObjects, IsCollectionWithSize.hasSize(22));
   }

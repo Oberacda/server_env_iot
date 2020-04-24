@@ -20,9 +20,9 @@ public class EnvironmentalDataController {
 
     List<TemperatureTransferObject> tempData = new ArrayList<>();
     envData.forEach(
-        data -> {
-          tempData.add(new TemperatureTransferObject(data.getTimestamp(), data.getTemperature()));
-        });
+        data ->
+            tempData.add(
+                new TemperatureTransferObject(data.getTimestamp(), data.getTemperature())));
 
     return tempData;
   }
@@ -33,9 +33,8 @@ public class EnvironmentalDataController {
 
     List<HumidityTransferObject> humidityData = new ArrayList<>();
     envData.forEach(
-        data -> {
-          humidityData.add(new HumidityTransferObject(data.getTimestamp(), data.getHumidity()));
-        });
+        data ->
+            humidityData.add(new HumidityTransferObject(data.getTimestamp(), data.getHumidity())));
 
     return humidityData;
   }
