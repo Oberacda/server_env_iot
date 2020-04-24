@@ -39,6 +39,8 @@ jobs:
         run: ./gradlew classes testClasses
       - name: Test
         run: ./gradlew test
+      - name: CodeCoverage
+        run: ./gradlew jacocoTestReport
       - name: Sonarqube
         run: ./gradlew sonarqube
         env:
