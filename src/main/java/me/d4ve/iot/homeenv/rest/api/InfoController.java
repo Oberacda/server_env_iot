@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class InfoController {
-    private final InfoTransferObject infoResponse;
+  private final InfoTransferObject infoResponse;
 
-    public InfoController(InfoTransferObject infoResponse) {
-        this.infoResponse = infoResponse;
-    }
+  public InfoController(InfoTransferObject infoResponse) {
+    this.infoResponse = infoResponse;
+  }
 
-    @GetMapping("/")
-    public InfoTransferObject listEndpoints() {
-        return infoResponse;
-    }
+  @GetMapping("/")
+  public InfoTransferObject listEndpoints() {
+    return infoResponse;
+  }
 }

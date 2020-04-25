@@ -7,28 +7,28 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 @Component
 public class InfoTransferObject {
-    private final List<String> endpoints = new ArrayList<>();
+  private final List<String> endpoints = new ArrayList<>();
 
-    public InfoTransferObject(RequestMappingHandlerMapping requestHandlerMapping) {
-        var conditions = requestHandlerMapping.getHandlerMethods().keySet();
-        for (var condition : conditions) {
-            for (var method : condition.getMethodsCondition().getMethods()) {
-                for (var path : condition.getPatternsCondition().getPatterns()) {
-                    endpoints.add(method + " " + path);
-                }
-            }
+  public InfoTransferObject(RequestMappingHandlerMapping requestHandlerMapping) {
+    var conditions = requestHandlerMapping.getHandlerMethods().keySet();
+    for (var condition : conditions) {
+      for (var method : condition.getMethodsCondition().getMethods()) {
+        for (var path : condition.getPatternsCondition().getPatterns()) {
+          endpoints.add(method + " " + path);
         }
+      }
     }
+  }
 
-    public List<String> getEndpoints() {
-        return endpoints;
-    }
+  public List<String> getEndpoints() {
+    return endpoints;
+  }
 
-    public String getInfo() {
-        return "D4ve's Home Environment IoT Sensor Server";
-    }
+  public String getInfo() {
+    return "D4ve's Home Environment IoT Sensor Server";
+  }
 
-    public String getMessage() {
-        return "Stay warm!";
-    }
+  public String getMessage() {
+    return "Stay warm!";
+  }
 }
