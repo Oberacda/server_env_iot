@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: home-env-iot-server-ipv4
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: home-env-iot-ipv4
+    kubernetes.io/ingress.global-static-ip-name: api-d4ve-me-ipv4
     networking.gke.io/managed-certificates: home-env-iot-api
     kubernetes.io/ingress.allow-http: "false"
 spec:
@@ -21,7 +21,7 @@ kind: Ingress
 metadata:
   name: home-env-iot-server-ipv6
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: home-env-iot-ipv6
+    kubernetes.io/ingress.global-static-ip-name: api-d4ve-me-ipv6
     networking.gke.io/managed-certificates: home-env-iot-api
     kubernetes.io/ingress.allow-http: "false"
 spec:
