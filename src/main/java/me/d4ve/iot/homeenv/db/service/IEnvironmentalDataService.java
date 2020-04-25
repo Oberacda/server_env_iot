@@ -1,7 +1,7 @@
-package me.d4ve.iot.homeenv.service;
+package me.d4ve.iot.homeenv.db.service;
 
 import java.util.List;
-import me.d4ve.iot.homeenv.model.EnvironmentalData;
+import me.d4ve.iot.homeenv.db.model.EnvironmentalData;
 import org.springframework.lang.NonNull;
 
 /**

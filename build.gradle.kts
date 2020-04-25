@@ -8,6 +8,7 @@ plugins {
     id("com.palantir.git-version") version "0.12.2"
     id("com.cherryperry.gradle-file-encrypt") version "1.4.0"
     id("org.sonarqube") version "2.8"
+    jacoco
 }
 
 group = "me.d4ve.iot"
@@ -33,7 +34,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     testRuntimeOnly("com.h2database:h2")
-
+    testImplementation("org.hamcrest:hamcrest:2.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
@@ -76,7 +77,6 @@ jib {
         jvmFlags = listOf("-Dspring.profiles.active=production")
     }
 }
-
 
 dockerRun {
     name = project.name
@@ -160,12 +160,16 @@ fun kubectlDeployTask(
 val deployDeploymentAccount by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/deployment-account",
         commonTag = "component" to "deployment-account"
-)
+) {
+    mustRunAfter("decyptFiles")
+}
 val deployDatabase by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/postgres",
         commonTag = "component" to "postgres",
         kubeconfig = deploymentKubeConfig
-)
+) {
+    mustRunAfter("decyptFiles")
+}
 val deployServer by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/server",
         commonTag = "component" to "server",
@@ -186,6 +190,15 @@ sonarqube {
         property("sonar.host.url", "https://sonarcloud.io");
     }
 }
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = true
+    }
+}
+
+
 
 val Project.versionDetails
     get() = (this.extra["versionDetails"] as groovy.lang.Closure<*>)() as com.palantir.gradle.gitversion.VersionDetails
