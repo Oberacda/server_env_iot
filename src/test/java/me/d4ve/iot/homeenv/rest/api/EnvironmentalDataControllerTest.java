@@ -7,8 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import me.d4ve.iot.homeenv.rest.transferobjects.HumidityTransferObject;
-import me.d4ve.iot.homeenv.rest.transferobjects.TemperatureTransferObject;
+import me.d4ve.iot.homeenv.rest.transferobjects.*;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,36 @@ class EnvironmentalDataControllerTest {
     String response =
         mockMvc.perform(get("/env/humidity")).andReturn().getResponse().getContentAsString();
     List<HumidityTransferObject> responseObjects =
+        objectMapper.readValue(response, new TypeReference<>() {});
+
+    assertThat(responseObjects, IsCollectionWithSize.hasSize(22));
+  }
+
+  @Test
+  void getPressureValues() throws Exception {
+    String response =
+        mockMvc.perform(get("/env/pressure")).andReturn().getResponse().getContentAsString();
+    List<PressureTransferObject> responseObjects =
+        objectMapper.readValue(response, new TypeReference<>() {});
+
+    assertThat(responseObjects, IsCollectionWithSize.hasSize(22));
+  }
+
+  @Test
+  void getIlluminanceValues() throws Exception {
+    String response =
+        mockMvc.perform(get("/env/illuminance")).andReturn().getResponse().getContentAsString();
+    List<IlluminanceTransferObject> responseObjects =
+        objectMapper.readValue(response, new TypeReference<>() {});
+
+    assertThat(responseObjects, IsCollectionWithSize.hasSize(22));
+  }
+
+  @Test
+  void getUvValues() throws Exception {
+    String response =
+        mockMvc.perform(get("/env/uv")).andReturn().getResponse().getContentAsString();
+    List<UvTransferObject> responseObjects =
         objectMapper.readValue(response, new TypeReference<>() {});
 
     assertThat(responseObjects, IsCollectionWithSize.hasSize(22));
