@@ -161,14 +161,14 @@ val deployDeploymentAccount by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/deployment-account",
         commonTag = "component" to "deployment-account"
 ) {
-    mustRunAfter("decyptFiles")
+    mustRunAfter("decryptFiles")
 }
 val deployDatabase by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/postgres",
         commonTag = "component" to "postgres",
         kubeconfig = deploymentKubeConfig
 ) {
-    mustRunAfter("decyptFiles")
+    mustRunAfter("decryptFiles")
 }
 val deployServer by kubectlDeployTask(
         kustomization = "$deploymentSrcKubernetes/server",
