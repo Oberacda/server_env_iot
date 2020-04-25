@@ -8,6 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+// TODO: 25.04.20 Update REST API to version 2.0
+
+/**
+ * REST Controller for the API.
+ *
+ * @author David Oberacker
+ */
 @RestController
 public class EnvironmentalDataController {
 
