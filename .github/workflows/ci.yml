@@ -39,13 +39,19 @@ jobs:
         run: ./gradlew classes testClasses
       - name: Test
         run: ./gradlew test
-      - name: CodeCoverage
+      - name: JaCoCo Coverage Report
         run: ./gradlew jacocoTestReport
-      - name: Sonarqube
+      - name: Upload quality report to Sonarcloud
         run: ./gradlew sonarqube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
     name: Deploy
