@@ -35,7 +35,7 @@ public class GcpSubClient {
    * @return A message channel adapter.
    */
   @Bean
-  @Profile("!test")
+  @Profile("production")
   public PubSubInboundChannelAdapter messageChannelAdapter(
       @Qualifier("envDataInputChannel") MessageChannel inputChannel,
       PubSubTemplate pubSubTemplate) {
@@ -55,7 +55,7 @@ public class GcpSubClient {
    * @return The create message channel.
    */
   @Bean
-  @Profile("!test")
+  @Profile("production")
   public MessageChannel envDataInputChannel() {
 
     return new DirectChannel();
@@ -69,7 +69,7 @@ public class GcpSubClient {
    *     exception is thrown.
    */
   @ServiceActivator(inputChannel = "envDataInputChannel")
-  @Profile("!test")
+  @Profile("production")
   public void messageReceiver(String payload) throws JsonProcessingException {
     ObjectMapper objectMapper = new ObjectMapper();
 

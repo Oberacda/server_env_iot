@@ -1,13 +1,23 @@
 package me.d4ve.iot.homeenv.rest.api;
 
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import me.d4ve.iot.homeenv.db.service.IEnvironmentalDataService;
 import me.d4ve.iot.homeenv.rest.transferobjects.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+// TODO: 25.04.20 Update REST API to version 2.0
+
+/**
+ * REST Controller for the API.
+ *
+ * @author David Oberacker
+ */
 @RestController
 public class EnvironmentalDataController {
 
@@ -21,10 +31,28 @@ public class EnvironmentalDataController {
     envData.forEach(
         data ->
             tempData.add(
-                new TemperatureTransferObject(data.getTimestamp(), data.getTemperature())));
+                new TemperatureTransferObject(data.getTimestamp().toLocalDateTime(), data.getTemperature())));
 
     return tempData;
   }
+
+  @GetMapping(value = "/env/temperature/{before}/{duration}", produces = "application/json")
+  public List<TemperatureTransferObject> getTemperatureValuesFromTo(
+          @PathVariable String before, @PathVariable String duration
+  ) {
+    Timestamp beforeTimestamp = Timestamp.valueOf(before);
+    Duration dur = Duration.parse(duration);
+    var envData = environmentalDataService.findAllBefore(beforeTimestamp, dur);
+
+    List<TemperatureTransferObject> tempData = new ArrayList<>();
+    envData.forEach(
+            data ->
+                    tempData.add(
+                            new TemperatureTransferObject(data.getTimestamp().toLocalDateTime(), data.getTemperature())));
+
+    return tempData;
+  }
+
 
   @GetMapping(value = "/env/humidity", produces = "application/json")
   public List<HumidityTransferObject> getHumidityValues() {

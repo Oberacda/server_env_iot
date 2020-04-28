@@ -1,17 +1,20 @@
 package me.d4ve.iot.homeenv.rest.transferobjects;
 
+import org.apache.tomcat.jni.Local;
+
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class TemperatureTransferObject {
-  private Timestamp timestamp;
+  private LocalDateTime timestamp;
   private double temperature;
 
-  public TemperatureTransferObject(Timestamp timestamp, double temperature) {
+  public TemperatureTransferObject(LocalDateTime timestamp, double temperature) {
     this.timestamp = timestamp;
     this.temperature = temperature;
   }
 
-  public Timestamp getTimestamp() {
+  public LocalDateTime getTimestamp() {
     return timestamp;
   }
 
